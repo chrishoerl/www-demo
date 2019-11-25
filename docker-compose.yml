@@ -12,12 +12,14 @@ services:
       ### traefik 2.x ###
       - "traefik.enable=true"
       - "traefik.http.routers.www-demo.rule=Host(`demo.example.com`)"
-      - "traefik.http.routers.www-demo.middlewares=www-demo-auth"
+      ### uncomment for htaccess auth
+      #- "traefik.http.routers.www-demo.middlewares=www-demo-auth"
       - "traefik.http.routers.www-demo.entrypoints=websecure"
       - "traefik.http.routers.www-demo.tls=true"
       - "traefik.http.routers.www-demo.tls.certresolver=myhttpchallenge"
       ### please create your own credentials first
-      - "traefik.http.middlewares.www-demo-auth.basicauth.users=user:$$apr1$$vgNPzKCL$$oBR6osdf6GqHCGMrNB."
+      ### uncomment for htaccess auth
+      #- "traefik.http.middlewares.www-demo-auth.basicauth.users=user:$$apr1$$vgNPzKCL$$oBR6osdf6GqHCGMrNB."
     volumes:
       - website:/usr/share/nginx/html
 
