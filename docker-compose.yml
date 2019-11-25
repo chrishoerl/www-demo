@@ -17,9 +17,8 @@ services:
       - "traefik.http.routers.www-demo.entrypoints=websecure"
       - "traefik.http.routers.www-demo.tls=true"
       - "traefik.http.routers.www-demo.tls.certresolver=myhttpchallenge"
-      ### please create your own credentials first
-      ### uncomment for htaccess auth
-      #- "traefik.http.middlewares.www-demo-auth.basicauth.users=user:$$apr1$$vgNPzKCL$$oBR6osdf6GqHCGMrNB."
+      ### CREDENTIALS ARE user/password
+      #- "traefik.http.middlewares.www-demo-auth.basicauth.users=user:$$apr1$2KiFO8It$uqeQY7nYaq4lG2AaFWmHt1"
     volumes:
       - website:/usr/share/nginx/html
 
