@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+
+############# NGINX Demo Website ###########
+  nginx:
+    #image: nginx:1.15.12-alpine
+    image: nginx:latest
+    container_name: 'www-demo'
+    restart: unless-stopped
+    labels:
+      ### traefik 2.x ###
+      - "traefik.enable=true"
+      - "traefik.http.routers.www-demo.rule=Host(`demo.example.com`)"
+      - "traefik.http.routers.www-demo.middlewares=www-demo-auth"
+      - "traefik.http.routers.www-demo.entrypoints=websecure"
+      - "traefik.http.routers.www-demo.tls=true"
+      - "traefik.http.routers.www-demo.tls.certresolver=myhttpchallenge"
+      ### please create your own credentials first
+      - "traefik.http.middlewares.www-demo-auth.basicauth.users=user:$$apr1$$vgNPzKCL$$oBR6osdf6GqHCGMrNB."
+    volumes:
+      - website:/usr/share/nginx/html
+
+      ### to be questioned
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    networks:
+      - www-demo_network
+      - proxy_network
+
+############# VOLUMES ################
+volumes:
+  website:
+    external: false
+
+############# NETWORKS ###############
+
+networks:
+  www-demo_network:
+    driver: bridge
+  proxy_network:
+    external: true
